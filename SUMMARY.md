@@ -25,5 +25,6 @@
   * [21-빌트인 객체](javascript/21.md)
   * [22-this](javascript/22-this.md)
 * [😄 REACT](react/README.md)
+  * [03-Components와 Props](react/03-components-props.md)
   * [01-JSX](react/01-jsx.md)
   * [02-엘리먼트 렌더링](react/02.md)

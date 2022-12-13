@@ -1,7 +1,7 @@
 # Table of contents
 
 * [🌕 Intro](README.md)
-* [😀 Javascript](javascript/README.md)
+* [😀 JAVASCRIPT](javascript/README.md)
   * [01-프로그래밍](javascript/01.md)
   * [02-자바스크립트란?](javascript/02.md)
   * [03-자바스크립트 개발 환경과 실행 방법](javascript/03.md)

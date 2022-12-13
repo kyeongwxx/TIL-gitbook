@@ -1,0 +1,2 @@
+# 20-strict mode
+

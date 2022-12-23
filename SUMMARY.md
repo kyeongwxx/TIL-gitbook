@@ -30,5 +30,3 @@
   * [02-엘리먼트 렌더링](react/02.md)
   * [03-Components와 Props](react/03-components-props.md)
   * [04-state와 생명주기](react/04-state.md)
-* [😄 REFACTORING](reafactoring/READM.MD)
-  * [01-리팩터링: 첫 번째 예시]

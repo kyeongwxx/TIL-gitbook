@@ -522,3 +522,7 @@ person.foo(function() {
     console.log(`Hi! my name is ${this.name}.`); // 2. Hi! My name is Lee.
 });j
 ```
+
+> Reference
+>
+> 모던 자바스크립트 DEEP DIVE

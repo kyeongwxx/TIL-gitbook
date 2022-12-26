@@ -25,6 +25,7 @@
   * [21-빌트인 객체](javascript/21.md)
   * [22-this](javascript/22-this.md)
   * [23-실행 컨텍스트](javascript/23.md)
+  * [24-클로저](javascript/24.md)
 * [😄 REACT](react/README.md)
   * [01-JSX](react/01-jsx.md)
   * [02-엘리먼트 렌더링](react/02.md)

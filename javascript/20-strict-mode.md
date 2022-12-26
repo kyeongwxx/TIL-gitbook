@@ -212,3 +212,7 @@ foo();
     console.log(arguments); // [Arguments] { '0': 1, length: 1 }
 }(1));
 ```
+
+> Reference
+>
+> 모던 자바스크립트 DEEP DIVE

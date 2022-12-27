@@ -32,5 +32,6 @@
   * [03-Components와 Props](react/03-components-props.md)
   * [04-state와 생명주기](react/04-state.md)
   * [05-이벤트 처리하기](react/05.md)
+  * [06-조건부 렌더링](react/06.md)
 * [😆 REFACTORING](refactoring/README.md)
   * [01-리팩터링: 첫 번째 예시](refactoring/01.md)

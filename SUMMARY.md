@@ -26,6 +26,7 @@
   * [22-this](javascript/22-this.md)
   * [23-실행 컨텍스트](javascript/23.md)
   * [24-클로저](javascript/24.md)
+  * [25-클래스](javascript/25.md)
 * [😄 REACT](react/README.md)
   * [01-JSX](react/01-jsx.md)
   * [02-엘리먼트 렌더링](react/02.md)

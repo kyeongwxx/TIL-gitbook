@@ -35,5 +35,6 @@
   * [05-이벤트 처리하기](react/05.md)
   * [06-조건부 렌더링](react/06.md)
   * [07-리스트와 Key](react/07-key.md)
+  * [08-forms](react/08-forms.md)
 * [😆 REFACTORING](refactoring/README.md)
   * [01-리팩터링: 첫 번째 예시](refactoring/01.md)

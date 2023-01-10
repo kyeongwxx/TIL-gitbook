@@ -28,6 +28,7 @@
   * [24-클로저](javascript/24.md)
   * [25-클래스](javascript/25.md)
   * [26-ES6 함수의 추가 기능](javascript/26-es6.md)
+  * [27-배열](javascript/27.md)
 * [😄 REACT](react/README.md)
   * [01-JSX](react/01-jsx.md)
   * [02-엘리먼트 렌더링](react/02.md)

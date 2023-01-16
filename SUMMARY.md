@@ -39,5 +39,6 @@
   * [07-리스트와 Key](react/07-key.md)
   * [08-forms](react/08-forms.md)
   * [09-Lifting State Up](react/09-lifting-state-up.md)
+  * [10-Composition vs Inheritance](react/10-composition-vs-inheritance.md)
 * [😆 REFACTORING](refactoring/README.md)
   * [01-리팩터링: 첫 번째 예시](refactoring/01.md)

@@ -228,4 +228,206 @@ The original list of products는 props를 통해 전달되므로 state가 아니
 이를 예시에 적용하면
 
 * <mark style="background-color:green;">\<ProductTable /></mark> 컴포넌트는 state에 의존한 상품 리스트를 필터링해서 보여주어야 하고, <mark style="background-color:purple;">\<SearchBar /></mark> 컴포넌트는 text와 checkbox의 state를 보여주어야 한다.
-* 공통 소유 컴포넌트는 <mark style="background-color:yellow;">\<FilterableProductTable /></mark> 컴포넌트이다.
+* 공통 소유 컴포넌트는 <mark style="background-color:yellow;">\<FilterableProductTable /></mark> 컴포넌트이다. 의미상으로도 이 컴포넌트가 text와 checkbox의 state를 갖는 것이 타당하다.
+
+state의 위치를 결정했다. 이제 this.state = { filterText: '', inStockOnly: false }를 <mark style="background-color:yellow;">\<FilterableProductTable /></mark> 컴포넌트의 constructor에 추가하여 애플리케이션의 초기 state를 반영한다.
+
+다음으로 filterText와 inStockOnly를 <mark style="background-color:green;">\<ProductTable /></mark> 컴포넌트와 <mark style="background-color:purple;">\<SearchBar /></mark> 컴포넌트에 prop으로 전달한다.
+
+마지막으로 이 props를 사용하여 <mark style="background-color:green;">\<ProductTable /></mark> 컴포넌트의 행을 필터링하고, <mark style="background-color:purple;">\<SearchBar /></mark> 컴포넌트의 필드값을 설정한다.
+
+```jsx
+class FilterableProductTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { filterText: '', inStockOnly: false };
+  }
+  
+  render() {
+    return (
+      <div>
+        <SearchBar
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly}
+        />
+        <ProductTable
+          products={this.props.products}
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly}
+        />
+      </div>
+    );
+  }
+}
+```
+
+```jsx
+class ProductTable extends React.Component {
+  render() {
+    const filterText = this.props.filterText;
+    const inStockOnly = this.props.inStockOnly;
+  
+    const rows = [];
+    let lastCategory = null;
+    
+    this.props.products.forEach((product) => {
+      if (product.name.indexOf(filterText) === -1) return;
+      if (inStockOnly && !product.stocked) return;
+    
+      if (product.category !== lastCategory) {
+        rows.push(
+          <ProductCategoryRow
+            category={product.category}
+            key={product.category}
+          />
+        );
+      }
+      
+      rows.push(
+        <ProductRow
+          product={product}
+          key={product.name}
+        />
+      );
+      
+      lastCategory = product.category;
+    });
+    
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+    );
+  }
+}
+```
+
+```jsx
+class SearchBar extends React.Component {
+  render() {
+    const filterText = this.state.filterText;
+    const inStockOnly = this.props.inStockOnly;
+    
+    return (
+      <form>
+        <input
+          type='text'
+          placeholder='Search...'
+          value={filterText}
+        />
+        <p>
+          <input
+            type='checkbox'
+            checked={inStockOnly}
+          />
+          {' '}
+          Only show products in stock
+        </p>
+      </form>
+    );
+  }
+}
+```
+
+## Step 5: 역방향 데이터 흐름 추가하기
+
+지금까지 계층구조 아래로 props가 흐르는 애플리케이션을 만들었다. 이제 역방향 데이터 흐름을 만들어보자. 계층구조의 하단에 있는 form 컴포넌트에서 <mark style="background-color:yellow;">\<FilterableProductTable /></mark> 컴포넌트의 state를 업데이트할 수 있도록.
+
+4단계에서 체크박스를 체크하거나 search text를 입력할 경우 React가 input을 무시하는데, 이는 input 태그의 value 속성이 항상 <mark style="background-color:yellow;">\<FilterableProductTable /></mark> 컴포넌트의 state와 동일하도록 설정했기 때문이다.
+
+우리는 사용자가 form을 변경할 때마다 사용자의 input을 반영할 수 있도록 state를 업데이트하길 원한다. 컴포넌트는 자신의 state만 변경할 수 있기 때문에 <mark style="background-color:yellow;">\<FilterableProductTable /></mark> 컴포넌트는 <mark style="background-color:purple;">\<SearchBar /></mark> 컴포넌트에 콜백을 넘겨서 state가 업데이트되어야 할 때마다 호출되도록 해야한다.
+
+방법은 input 태그에 onChange 이벤트를 사용하여 알림을 받고, <mark style="background-color:yellow;">\<FilterableProductTable /></mark> 컴포넌트에서 전달된 콜백은 setState()를 호출하고 애플리케이션은 업데이트 될 것이다.
+
+```jsx
+class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleInStockChange = this.handleInStockChange.bind(this);
+  }
+  
+  handleFilterTextChange(e) {
+    this.props.onFilterTextChange(e.target.value);
+  }
+  
+  handleInStockChange(e) {
+    this.props.onInStockChange(e.target.value);
+  }
+  
+  render() {
+    const filterText = this.state.filterText;
+    const inStockOnly = this.props.inStockOnly;
+    
+    return (
+      <form>
+        <input
+          type='text'
+          placeholder='Search...'
+          value={filterText}
+          onChange={this.handleFilterTextChange}
+        />
+        <p>
+          <input
+            type='checkbox'
+            checked={inStockOnly}
+            onChange={this.handleInStockChange}
+          />
+          {' '}
+          Only show products in stock
+        </p>
+      </form>
+    );
+  }
+}
+```
+
+```jsx
+class FilterableProductTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { filterText: '', inStockOnly: false };
+    
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleInStockChange = this.handleInStockChange.bind(this);
+  }
+  
+  handleFilterTextChange(filterText) {
+    this.setState({ filterText: filterText });
+  }
+  
+  handleInStockChange(inStockOnly) {
+    this.setState({ inStockOnly: inStockOnly });
+  }
+  
+  render() {
+    return (
+      <div>
+        <SearchBar
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly}
+          onFilterTextChange={this.handleFilterTextChange}
+          onHandleInStockChange={this.handleInStockChange}
+        />
+        <ProductTable
+          products={this.props.products}
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly}
+        />
+      </div>
+    );
+  }
+}
+```
+
+> Reference
+>
+> [https://reactjs.org/](https://reactjs.org/)
+>
+> **2023.01.20**

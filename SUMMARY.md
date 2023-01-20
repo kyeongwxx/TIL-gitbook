@@ -40,5 +40,6 @@
   * [08-forms](react/08-forms.md)
   * [09-Lifting State Up](react/09-lifting-state-up.md)
   * [10-Composition vs Inheritance](react/10-composition-vs-inheritance.md)
+  * [11-Thinking In React](react/11-thinking-in-react.md)
 * [😆 REFACTORING](refactoring/README.md)
   * [01-리팩터링: 첫 번째 예시](refactoring/01.md)

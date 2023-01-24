@@ -30,6 +30,7 @@
   * [26-ES6 함수의 추가 기능](javascript/26-es6.md)
   * [27-배열](javascript/27.md)
   * [28-Number](javascript/28-number.md)
+  * [29-Math](javascript/29-math.md)
 * [😄 REACT](react/README.md)
   * [01-Main Concepts](react/01-main-concepts/README.md)
     * [01-JSX](react/01-jsx.md)

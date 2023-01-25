@@ -31,6 +31,7 @@
   * [27-배열](javascript/27.md)
   * [28-Number](javascript/28-number.md)
   * [29-Math](javascript/29-math.md)
+  * [30-Date](javascript/30-date.md)
 * [😄 REACT](react/README.md)
   * [01-Main Concepts](react/01-main-concepts/README.md)
     * [01-JSX](react/01-jsx.md)

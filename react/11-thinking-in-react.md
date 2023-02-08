@@ -8,7 +8,7 @@ description: React로 상품을 검색할 수 있는 간단한 데이터 테이�
 
 목업과 JSON API 가지고 있다고 생각해보자. 목업은 다음과 비슷할 것이다.
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 JSON API는 아래와 같은 데이터를 반환한다.
 

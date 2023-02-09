@@ -23,7 +23,7 @@ regExp.test(tel); // false
 
 정규 표현식 리터럴은 다음과 같이 표현한다.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>정규 표현식 리터럴</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption><p>정규 표현식 리터럴</p></figcaption></figure>
 
 ```javascript
 const target = 'Is this all there is?';

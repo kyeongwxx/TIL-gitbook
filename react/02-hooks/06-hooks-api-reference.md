@@ -291,3 +291,20 @@ function Counter({ initialCount }) {
 <mark style="color:green;">**Bailing out of a dispatch**</mark>
 
 Reducer Hook에서 현재 state와 같은 값을 반환하는 경우 React는 자식을 리렌더링하거나 effect를 발생시키지 않고 이것들을 회피할 것이다.
+
+### useCallback
+
+```jsx
+const memoizedCallback = useCallback(
+  () => {
+    doSomething(a, b);
+  },
+  [a, b],
+);
+```
+
+메모이제이션된 콜백을 반환한다. (메모이제이션? 컴퓨터 프로그램이 동일한 계산을 반복해야 할 때, 이전에 계산한 값을 메모리에 저장함으로써 동일한 계산의 반복 수행을 제거하여 프로그램 실행 속도를 빠르게 하는 기술. 동적 계획법의 핵심이 되는 기술)
+
+콜백과 dependency를 전달하면 useCallback은 콜백의 메모이제이션된 버전을 반환한다. 메모이제이션된 버전은 dependency가 변경되었을 때만 변경된다. 이것은 불필요한 렌더링을 방지하기 위해 참조 동일성에 의존적인 자식 컴포넌트에 콜백을 전달할 때 유용하다.
+
+useCallback(fn, deps)은 useMemo(() => fn, deps)와 같다.

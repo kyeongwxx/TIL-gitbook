@@ -195,3 +195,99 @@ function ThemedButton() {
   );
 }
 ```
+
+## Additional Hooks
+
+### useReducer
+
+```jsx
+const [state, dispatch] = useReducer(reducer, initialArg, init);
+```
+
+useState의 대체 함수. (state, action) => newState의 형태로 reducer를 받고, dispatch 메서드와 짝의 형태로 현재 state를 반환한다.
+
+다수의 하위값을 포함하는 복잡한 정적 로직을 만드는 경우나 다음 state가 이전 state에 의존적인 경우에 보통 useState보다 useReducer를 선호한다. 또한 useReducer는 자세한 업데이트를 트리거하는 컴포넌트의 성능을 최적화 할 수 있는데, 이는 콜백 대신 dispatch를 전달할 수 있기 때문이다.
+
+아래는 reducer를 이용한 카운터 예제.
+
+```jsx
+const initialState = { count: 0 };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+    </>
+  );
+}
+```
+
+> React는 dispatch 함수의 동일성이 안정적이고 리렌더링 시에도 변경되지 않는다는 것을 보장한다. 이 때문에 useEffect나 useCallback의 dependency에 dispatch 함수를 포함시키지 않아도 된다.
+
+<mark style="color:green;">**Specifying the initial state**</mark>
+
+useReducer state의 초기화에는 두 가지 방법이 있다. 가장 간단한 방법은 초기 state를 두 번째 인자로 전달하는 것.
+
+```jsx
+const [state, dispatch] = useReducer(
+  reducer,
+  { count: initialCount }
+);
+```
+
+<mark style="color:green;">**Lazy initialization**</mark>
+
+초기 state를 지연해서 생성할 수도 있다. 이를 위해선 init 함수를 세 번째 인자로 전달한다. 초기 state는 init(initialArg)에 설정될 것이다.
+
+이는 reducer 외부에서 초기 state를 계산하는 로직을 추출할 수 있도록 한다. 또한, 어떤 액션에 대한 대응으로 나중에 state를 재설정하는 데에도 유용하다.
+
+```jsx
+function init(initialCount) {
+  return { count: initialCount };
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    case 'reset':
+      return init(action.payload);
+    default:
+      throw new Error();
+  }
+}
+
+function Counter({ initialCount }) {
+  const [state, dispatch] = useReducer(reducer, initialCount, init);
+  
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({ type: 'reset', payload: initialCount })}>Reset</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+    </>
+  );
+}
+```
+
+<mark style="color:green;">**Bailing out of a dispatch**</mark>
+
+Reducer Hook에서 현재 state와 같은 값을 반환하는 경우 React는 자식을 리렌더링하거나 effect를 발생시키지 않고 이것들을 회피할 것이다.

@@ -308,3 +308,17 @@ const memoizedCallback = useCallback(
 콜백과 dependency를 전달하면 useCallback은 콜백의 메모이제이션된 버전을 반환한다. 메모이제이션된 버전은 dependency가 변경되었을 때만 변경된다. 이것은 불필요한 렌더링을 방지하기 위해 참조 동일성에 의존적인 자식 컴포넌트에 콜백을 전달할 때 유용하다.
 
 useCallback(fn, deps)은 useMemo(() => fn, deps)와 같다.
+
+### useMemo
+
+```jsx
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+```
+
+메모이제이션된 값을 반환한다.
+
+create 함수와 dependency를 전달하면 useMemo는 dependency가 변경되었을 때만 메모이제이션된 값을 계산한다. 이 최적화는 모든 렌더링마다 고비용 계산을 하는 것을 방지하게 해준다.
+
+useMemo로 전달된 함수는 렌더링 중에 실행된다. 따라서 side effects는 useEffect에서 하는 일이지 useMemo에서 하는 일이 아니다.
+
+dependency 배열이 없는 경우엔 매 렌더링 때마다 새 값을 계산하게 된다.

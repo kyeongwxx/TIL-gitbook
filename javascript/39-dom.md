@@ -137,3 +137,112 @@ HTML 요소가 객체화된 요소 노드 객체는 HTML 요소가 갖는 공통
 지금까지 살펴본 바와 같이 <mark style="color:purple;">**DOM은 HTML 문서의 계층적 구조와 정보를 표현하는 것은 물론 노드 객체의 종류, 즉 노드 타입에 따라 필요한 기능을 프로퍼티와 메서드의 집합인 DOM API로 제공한다. 이 DOM API를 통해 HTML의 구조나 내용 또는 스타일 등을 동적으로 조작할 수 있다.**</mark>
 
 ## 39.2 요소 노드 취득
+
+HTML의 구조나 내용 또는 스타일 등을 동적으로 조작하려면 먼저 요소 노드를 취득해야 한다. 텍스트 노드는 요소 노드의 자식 노드이고, 어트리뷰트 노드는 요소 노드와 연결되어 있기 때문에 텍스트 노드나 어트리뷰트 노드를 조작하고자 할 때도 마찬가지다.
+
+### 39.2.1 id를 이용한 요소 노드 취득
+
+Document.prototype.getElementById 메서드는 인수로 전달한 id 어트리뷰트 값을 갖는 하나의 요소 노드를 탐색하여 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul>
+            <li id="apple">Apple</li>
+            <li id="banana">Banana</li>
+            <li id="orange">Orange</li>
+        </ul>
+        <script>
+            // id 값이 'banana'인 요소 노드를 탐색하여 반환한다.
+            // 두 번째 li 요소가 파싱되어 생성된 요소 노드가 반환된다.
+            const $elem = document.getElementById('banana');
+
+            // 취득한 요소 노드의 style.color 프로퍼티 값을 변경한다.
+            $elem.style.color = 'red';
+        </script>
+    </body>
+</html>
+```
+
+id 값은 HTML 문서 내에서 유일한 값이어야 하며, class 어트리뷰트와는 달리 공백 문자로 구분하여 여러 개의 값을 가질 수 없다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul>
+            <li id="banana">Apple</li>
+            <li id="banana">Banana</li>
+            <li id="banana">Orange</li>
+        </ul>
+        <script>
+            // getElementById 메소드는 언제나 단 하나의 요소 노드를 반환한다.
+            // 첫 번째 li 요소가 파싱되어 생성된 요소 노드가 반환된다.
+            const $elem = document.getElementById('banana');
+
+            // 취득한 요소 노드의 style.color 프로퍼티 값을 변경한다.
+            $elem.style.color = 'red';
+        </script>
+    </body>
+</html>
+```
+
+만약 인수로 전달된 id 값을 갖는 HTML 요소가 존재하지 않는 경우 getElementById 메서드는 null을 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul>
+            <li id="apple">Apple</li>
+            <li id="banana">Banana</li>
+            <li id="orange">Orange</li>
+        </ul>
+        <script>
+            // id 값이 'grape'인 요소 노드를 탐색하여 반환한다. null이 반환된다.
+            const $elem = document.getElementById('grape');
+
+            // 취득한 요소 노드의 style.color 프로퍼티 값을 변경한다.
+            $elem.style.color = 'red'; // TypeError: Cannot read properties of null (reading 'style')
+        </script>
+    </body>
+</html>
+```
+
+HTML 요소에 id 어트리뷰트를 부여하면 id 값과 동일한 이름의 전역 변수가 암묵적으로 선언되고 해당 노드 객체가 할당되는 부수 효과가 있다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="foo"></div>
+        <script>
+            // id 값과 동일한 이름의 전역 변수가 암묵적으로 선언되고 해당 노드 객체가 할당된다.
+            console.log(foo === document.getElementById('foo')); // true
+
+            // 암묵적 전역으로 생성된 전역 프로퍼티는 삭제되지만 전역 변수는 삭제되지 않는다.
+            delete foo;
+            console.log(foo); // <div id="foo"></div>
+        </script>
+    </body>
+</html>
+```
+
+단, id 값과 동일한 이름의 전역 변수가 이미 선언되어 있으면 이 전역 변수에 노드 객체가 재할당되지 않는다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="foo"></div>
+        <script>
+            let foo = 1;
+
+            // id 값과 동일한 이름의 전역 변수가 이미 선언되어 있으면 노드 객체가 재할당되지 않는다.
+            delete foo;
+            console.log(foo); // 1
+        </script>
+    </body>
+</html>
+```

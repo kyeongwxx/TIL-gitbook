@@ -31,7 +31,7 @@ JSON API는 아래와 같은 데이터를 반환한다.
 
 보통 JSON 데이터를 사용자에게 보여주는 경우가 많으므로, 데이터가 올바르게 구축된 경우 UI와 잘 매핑된다는 것을 확인할 수 있다. 이는 UI와 데이터가 같은 information architecture를 가지기 때문이다. 각 컴포넌트가 데이터의 한 조각을 담당하도록 UI를 분리하면 된다.
 
-<figure><img src="../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 앱을 다섯 개의 컴포넌트로 나누어 보았다.
 

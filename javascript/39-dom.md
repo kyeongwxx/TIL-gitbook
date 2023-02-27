@@ -472,3 +472,68 @@ querySelector, querySelectorAll 메서드는 Document.prototype에 정의된 메
 
 * Document: DOM의 루트 노드인 문서 노드, 즉 document를 통해 호출하여 DOM 전체에서 요소 노드를 탐색하여 반환.
 * Element: 특정 요소 노드를 통해 호출하며, 특정 요소 노드의 자손 노드 중에서 요소 노드를 탐색하여 반환.
+
+### 39.2.5 특정 요소 노드를 취득할 수 있는지 확인
+
+Element.prototype.matches 메서드는 인수로 전달한 CSS 선택자를 통해 특정 요소 노드를 취득할 수 있는지 확인한다. 이벤트 위임을 사용할 때 유용하다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul id="fruits">
+            <li class="apple">Apple</li>
+            <li class="banana">Banana</li>
+            <li class="orange">Orange</li>
+        </ul>
+    </body>
+    <script>
+        const $apple = document.querySelector('.apple');
+
+        // $apple 노드는 '#fruits > li.apple'로 취득할 수 있다.
+        console.log($apple.matches('#fruits > li.apple')); // true
+
+        // $apple 노드는 '#fruits > li.banana'로 취득할 수 없다.
+        console.log($apple.matches('#fruits > li.banana')); // false
+    </script>
+</html>
+```
+
+### 39.2.6 HTMLCollection과 NodeList
+
+DOM 컬렉션 객체인 HTMLCollection과 NodeList는 DOM API가 여러 개의 결과값을 반환하기 위한 DOM 컬렉션 객체다. HTMLCollection과 NodeList는 모두 유사 배열 객체이면서 이터러블이다. 따라서 for...if 문으로 순회할 수 있으며 스프레드 문법을 사용하여 간단히 배열로 변환할 수 있다.
+
+HTMLCollection과 NodeList의 중요한 특징은 노드 객체의 상태 변화를 실시간으로 반영하는 <mark style="color:purple;">**살아 있는 객체**</mark>라는 것이다. HTMLCollection은 언제나 live 객체로 동작한다. 단, NodeList는 대부분의 경우 노드 객체의 상태 변화를 실시간으로 반영하지 않고 과거의 정적 상태를 유지하는 non-live 객체로 동작하지만 경우에 따라 live 객체로 동작할 때가 있다.
+
+<mark style="color:green;">**HTMLCollection**</mark>
+
+getElementsByTagName, getElementsByClassName 메서드가 반환하는 HTMLCollection 객체는 노드 객체의 상태 변화를 실시간으로 반영하는 살아 있는 DOM 컬렉션 객체다. 따라서 이를 살아 있는 객체라고 부르기도 한다.
+
+<mark style="color:green;">**NodeList**</mark>
+
+HTMLCollection 객체의 부작용을 해결하기 위해 querySelectorAll 메서드를 사용하는 방법도 있다. 이 메서드가 반환하는 NodeList 객체는 실시간으로 노드 객체의 상태 변경을 반영하지 않는다.
+
+<mark style="color:purple;">**노드 객체의 상태 변경과 상관없이 안전하게 DOM 컬렉션을 사용하려면 HTMLCollection이나 NodeList 객체를 배열로 변환하여 사용하는 것을 권장**</mark>한다.
+
+## 39.3 노드 탐색
+
+요소 노드를 취득한 다음, 취득한 요소를 기점으로 DOM 트리의 노드를 옮겨 다니며 부모, 형제, 자식 노드 등을 탐색해야 할 때가 있다.
+
+```html
+<ul id="fruits">
+    <li class="apple">Apple</li>
+    <li class="banana">Banana</li>
+    <li class="orange">Orange</li>
+</ul>
+```
+
+ul#fruits 요소는 3개의 자식 요소를 갖는다. 이때 먼저 ul#fruits 요소 노드를 취득한 다음, 자식 노드를 모두 탐색하거나 하나만 탐색할 수 있다. li.banana 요소는 2개의 형제 요소와 부모 요소를 갖는다. 이때 먼저 li.banana 요소 노드를 취득한 다음, 형제 노드를 탐색하거나 부모 노드를 탐색할 수 있다.
+
+이처럼 DOM 트리 상의 노드를 탐색할 수 있도록 Node, Element 인터페이스는 트리 탐색 프로퍼티를 제공한다.
+
+* Node.prototype: parentNode, previousSibling, nextSibling, firstChild, lastChild, childNodes 프로퍼티 제공
+* Element.prototype: previousElementSibling, nextElementSibling, firstElementChild, lastElementChild, children 프로퍼티 제공
+
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+
+###

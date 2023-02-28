@@ -797,3 +797,194 @@ Node.prototype.parentNode 프로퍼티를 사용한다. 텍스트 노드는 DOM 
     </script>
 </html>
 ```
+
+## 39.5 요소 노드의 텍스트 조작
+
+### 39.5.1 nodeValue
+
+Node.prototype.nodeValue 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티다. 따라서 참조와 할당 모두 가능하다.
+
+노드 객체의 nodeValue 프로퍼티를 참조하면 노드 객체의 값을 반환한다. 노드 객체의 값이란 텍스트 노드의 텍스트다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="foo">Hello</div>
+    </body>
+    <script>
+        // 문서 노드의 nodeValue 프로퍼티를 참조한다.
+        console.log(document.nodeValue); // null
+
+        // 요소 노드의 nodeValue 프로퍼티를 참조한다.
+        const $foo = document.getElementById('foo');
+        console.log($foo.nodeValue); // null
+
+        // 텍스트 노드의 nodeValue 프로퍼티를 참조한다.
+        const $textNode = $foo.firstChild;
+        console.log($textNode.nodeValue); // Hello
+    </script>
+</html>
+```
+
+텍스트 노드의 nodeValue 프로퍼티에 값을 할당하면 텍스트 노드의 값, 즉 텍스트를 변경할 수 있다. 따라서 요소 노드의 텍스트를 변경하려면 다음과 같은 순서의 처리가 필요하다.
+
+1. 텍스트를 변경할 요소 노드를 취득한 다음, 취득한 요소 노드의 텍스트 노드를 탐색한다.
+2. 탐색한 텍스트 노드의 nodeValue 프로퍼티를 사용하여 텍스트 노드의 값을 변경한다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="foo">Hello</div>
+    </body>
+    <script>
+        // 1. #foo 요소 노드의 자식 노드인 텍스트 노드를 취득한다.
+        const $textNode = document.getElementById('foo').firstChild;
+
+        // 2. nodeValue 프로퍼티를 사용하여 텍스트 노드의 값을 변경한다.
+        $textNode.nodeValue = 'World'
+
+        console.log($textNode.nodeValue); // World
+    </script>
+</html>
+```
+
+### 39.5.2 textContent
+
+Node.prototype.textContent 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 텍스트와 모든 자손 노드의 텍스트를 모두 취득하거나 변경한다.
+
+요소 노드의 textContent 프로퍼티를 참조하면 요소 노드의 콘텐츠 영역 내의 텍스트를 모두 반환한다. 다시 말해, 요소 노드의 childNodes 프로퍼티가 반환한 모든 노드들의 텍스트 노드의 값, 즉 텍스트를 모두 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="foo">Hello <span>world!</span></div>
+    </body>
+    <script>
+        // #foo 요소 노도의 텍스트를 모두 취득한다. 이 때 HTML 마크업은 무시된다.
+        console.log(document.getElementById('foo').textContent);
+        // Hello World
+    </script>
+</html>
+```
+
+요소 노드의 textContent 프로퍼티에 문자열을 할당하면 요소 노드의 모든 자식 노드가 제거되고 할당한 문자열이 텍스트로 추가된다. 이때 할당한 문자열에 HTML 마크업이 포함되어 있더라도 문자열 그대로 인식되어 텍스트로 취급된다. 즉, HTML 마크업이 파싱되지 않는다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="foo">Hello <span>world!</span></div>
+    </body>
+    <script>
+        // #foo 요소 노드의 모든 자식 노드가 제거되고 할당한 문자열이 텍스트로 추가된다.
+        // 이 때 HTML 마크업이 파싱되지 않는다.
+        document.getElementById('foo').textContent = 'Hi <span>there!</span>';
+    </script>
+</html>
+```
+
+참고로 textContent 프로퍼티와 유사한 동작을 하는 innerText 프로퍼티가 있다. 이는 다음과 같은 이유로 사용하지 않는 편이 좋다.
+
+* innerText 프로퍼티는 CSS에 순종적이다. 예를 들어, CSS에 의해 비표시(visibility: hidden;)로 지정된 요소 노드의 텍스트를 반환한지 않는다.
+* innerText 프로퍼티는 CSS를 고려해야 하므로 느리다.
+
+## 39.6 DOM 조작
+
+DOM 조작은 새로운 노드를 생성하여 DOM에 추가하거나 기존 노드를 삭제 또는 교체하는 것을 말한다. DOM 조작은 리플로우와 리페인트가 발생하는 원인이 되므로 성능에 영향을 준다. 따라서 복잡한 콘텐츠를 다루는 DOM 조작은 성능 최적화를 위해 주의해서 다루어야 한다.
+
+### 39.6.1 innerHTML
+
+Element.prototype.innerHTML 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 HTML 마크업을 취득하거나 변경한다. 요소 노드의 innerHTML 프로퍼티를 참조하면 요소 노드의 콘텐츠 영역 내에 포함된 모든 HTML 마크업을 문자열로 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="foo">Hello <span>world!</span></div>
+    </body>
+    <script>
+        // #foo 요소의 콘텐츠 영역 내의 HTML 마크업을 문자열로 취득한다.
+        console.log(document.getElementById('foo').innerHTML);
+        // "Hello <span>world!</span>"
+    </script>
+</html>
+```
+
+앞서 살펴본 textContent 프로퍼티를 참조하면 HTML 마크업을 무시하고 텍스트만 반환하지만 innerHTML 프로퍼티는 HTML 마크업이 포함된 문자열을 그대로 반환한다.
+
+요소 노드의 innerHTML 프로퍼티에 문자열을 할당하면 요소 노드의 모든 자식 노드가 제거되고 할당한 문자열에 포함되어 있는 HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="foo">Hello <span>world!</span></div>
+    </body>
+    <script>
+        // HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+        document.getElementById('foo').innerHTML = 'Hi <span>there!</span>';
+    </script>
+</html>
+```
+
+이처럼 innerHTML 프로퍼티를 사용하면 HTML 마크업 문자열로 간단히 DOM 조작이 가능하다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul id="fruits">
+            <li class="apple">Apple</li>
+        </ul>
+    </body>
+    <script>
+        const $fruits = document.getElementById('fruits');
+
+        // 노드 추가
+        $fruits.innerHTML += '<li class="banana">Banana</li>';
+        
+        // 노드 교체
+        $fruits.innerHTML = '<li class="orange">Orange</li>';
+
+        // 노드 삭제
+        $fruits.innerHTML = '';
+    </script>
+</html>
+```
+
+요소 노드의 innerHTML 프로퍼티에 할당한 HTML 마크업 문자열은 렌더링 엔진에 의해 파싱되어 요소 노드의 자식으로 DOM에 반영된다. 이때 사용자로부터 입력받은 데이터(untrusted input data)를 그대로 innerHTML 프로퍼티에 할당하는 것은 <mark style="color:purple;">**크로스 스크립팅 공격(XSS: Cross-site Scripting Attacks)**</mark>에 취약하므로 위험하다. HTML 마크업 내에 자바스크립트 악성 코드가 포함되어 있다면 파싱 과정에서 그대로 실행될 가능성이 있기 때문이다.
+
+innerHTML 프로퍼티의 또 다른 단점은 요소 노드의 innerHTML 프로퍼티에 HTML 마크업 문자열을 할당하는 경우 요소 노드의 모든 자식 노드를 제거하고 할당한 HTML 마크업 문자열을 파싱하여 DOM을 변경한다는 것이다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul id="fruits">
+            <li class="apple">Apple</li>
+        </ul>
+    </body>
+    <script>
+        const $fruits = document.getElementById('fruits');
+
+        // 노드 추가
+        $fruits.innerHTML += '<li class="banana">Banana</li>';
+    </script>
+</html>
+```
+
+위 예제는 #fruits 요소에 자식 요소 li.banana를 추가한다. 이때 #fruits 요소의 자식 요소 li.apple은 아무런 변경이 없으므로 다시 생성할 필요가 없다. 하지만 #fruits의 모든 자식 노드(li.apple)를 제거하고 새롭게 요소 노드 li.apple과 li.banana를 생성하여 #fruits 요소의 자식 요소로 추가한다. 즉, 효율적이지 않다.
+
+또한 innerHTML 프로퍼티는 새로운 요소를 삽입할 때 삽입될 위치를 지정할 수 없다는 단점도 있다.
+
+```html
+<ul id="fruits">
+    <li class="apple">Apple</li>
+    <li class="orange">Orange</li>
+</ul>
+```
+
+li.apple 요소와 li.orange 요소 사이에 새로운 요소를 삽입하고 싶은 경우 innerHTML 프로퍼티를 사용하면 삽입 위치를 지정할 수 없다.

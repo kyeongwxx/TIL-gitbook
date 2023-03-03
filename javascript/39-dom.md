@@ -1242,3 +1242,65 @@ Document.prototype.createDocumentFragment 메서드는 비어 있는 DocumentFra
 먼저 DocumentFragment 노드를 생성하고 DOM에 추가할 요소 노드를 생성하여 DocumentFragment 노드에 자식 노드로 추가한 다음, DocumentFragment 노드를 기존 DOM에 추가한다.
 
 이때 실제로 DOM 변경이 발생하는 것은 한 번뿐이며 리플로우와 리페인트도 한 번만 실행된다. 따라서 여러 개의 요소 노드를 DOM에 추가하는 경우 DocumentFragment 노드를 사용하는 것이 더 효율적이다.
+
+### 39.6.5 노드 삽입
+
+<mark style="color:green;">**마지막 노드로 추가**</mark>
+
+Node.prototype.appendChild 메서드는 인수로 전달받은 노드를 자신을 호출한 노드의 마지막 자식 노드로 DOM에 추가한다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul id="fruits">
+            <li>Apple</li>
+            <li>Banana</li>
+        </ul>
+    </body>
+    <script>
+        // 요소 노드 생성
+        const $li = document.createElement('li');
+
+        // 텍스트 노드를 $li 요소 노드의 마지막 자식 노드로 추가
+        $li.appendChild(document.createTextNode('Orange'));
+
+        // $li 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+        document.getElementById('fruits').appendChild($li);
+    </script>
+</html>
+```
+
+<mark style="color:green;">**지정한 위치에 노드 삽입**</mark>
+
+Node.prototype.insertBefore(newNode, childNode) 메서드는 첫 번째 인수로 전달받은 노드를 두 번째 인수로 전달받은 노드 앞에 삽입한다.
+
+두 번째 인수로 전달받은 노드는 반드시 insertBefore 메서드를 호출한 노드의 자식 노드이어야 한다.
+
+두 번째 인수로 전달받은 노드가 null이면 첫 번째 인수로 전달받은 노드를 insertBefore 메서드를 호출한 노드의 마지막 자식 노드로 추가한다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <ul id="fruits">
+            <li>Apple</li>
+            <li>Banana</li>
+        </ul>
+    </body>
+    <script>
+        const $fruits = document.getElementById('fruits');
+
+        // 요소 노드 생성
+        const $li = document.createElement('li');
+
+        // 텍스트 노드를 $li 요소 노드의 마지막 자식 노드로 추가
+        $li.appendChild(document.createTextNode('Orange'));
+
+        // $li 요소 노드를 #fruits 요소 노드의 마지막 자식 요소 앞에 삽입
+        $fruits.insertBefore($li, $fruits.lastElementChild);
+        // Apple - Orange - Banana
+    </script>
+</html>
+```
+

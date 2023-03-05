@@ -1424,3 +1424,45 @@ Node.prototype.removeChild(child) 메서드는 child 매개변수에 인수로 �
     </script>
 </html>
 ```
+
+## 39.7 어트리뷰트
+
+### 39.7.1 어트리뷰트 노드와 attributes 프로퍼티
+
+HTML 문서의 구성 요소인 HTML 요소는 여러 개의 어트리뷰트(속성)를 가질 수 있다.
+
+```html
+<input id="user" type="text" value="kkw">
+```
+
+* 글로벌 어트리뷰트: id, class, style, title, lang, tabindex, draggable, hidden 등
+* 이벤트 핸들러 어트리뷰트: onclick, onchange, onfocus, onblur, oninput, onkeypress, onkeyup, onmouseover, onsubmit, onload 등
+
+위 두 어트리뷰트는 모든 HTML 요소에서 공통적으로 사용할 수 있지만 특정 HTML 요소에만 한정적으로 사용 가능한 어트리뷰트도 있다. type, value, checked 어트리뷰트는 input 요소에만 사용할 수 있는 것처럼.
+
+HTML 문서가 파싱될 때 HTML 요소의 어트리뷰트는 어트리뷰트 노드로 변환되어 요소 노드와 연결된다. 이때 HTML 어트리뷰트당 하나의 어트리뷰트 노드가 생성된다. 즉, 위 input 요소는 3개의 어트리뷰트가 있으므로 3개의 어트리뷰트 노드가 생성된다.
+
+이때 모든 어트리뷰트 노드의 참조는 유사 배열 객체이자 이터러블인 NamedNodeMap 객체에 감겨서 요소 노드의 attributes 프로퍼티에 저장된다.
+
+따라서 요소 노드의 모든 어트리뷰트 노드는 요소 노드의 Element.prototype.attributes 프로퍼티로 취득할 수 있다. attributes 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티이며, 요소 노드의 모든 어트리뷰트 노드의 참조가 담긴 NamedNodeMap 객체를 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <input id="user" type="text" value="ungmo2">
+        <script>
+            // 요소 노드의 attribute 프로퍼티는 요소 노드의 모든 어트리뷰트 노드의 참조가 담긴
+            // NamedNodeMap 객체를 반환한다.
+            const { attributes } = document.getElementById('user');
+            console.log(attributes);
+            // NamedNodeMap {0: id, 1: type, 2: value, id: id, type: type, value: value, length: 3}
+
+            // 어트리뷰트 값 취득
+            console.log(attributes.id.value); // user
+            console.log(attributes.type.value); // text
+            console.log(attributes.value.value); // kkw
+        </script>
+    </body>
+</html>
+```

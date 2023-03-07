@@ -379,3 +379,15 @@ FancyInput = forwardRef(FancyInput);
 ```
 
 \<FancyInput ref={inputRef} /> 컴포넌트를 렌더링한 부모 컴포넌트는 Input.current.focus()를 호출할 수 있다.
+
+### useLayoutEffect
+
+이 함수의 시그니쳐는 useEffect와 동일하지만 모든 DOM 변경 후 동기적으로 실행된다. DOM에서 레이아웃을 읽고 동기적으로 리렌더링을 일으키기 위해 useLayoutEffect를 사용한다.
+
+useLayoutEffect 내부 함수는 브라우저가 화면을 그리기 이전 시점에 동기적으로 수행된다.
+
+화면 갱신을 차단하지 않으려면 가능한 한 useEffect를 사용하는 것이 좋다.
+
+> 서버 사이드 렌더링을 사용하는 경우 JavaScript가 다운로드될 때까지 useLayoutEffect와 useEffect를 실행할 수 없다는 점에 유의해야 한다.
+>
+> 이것이 서버 사이드 렌더링에서 useLayoutEffect가 포함되어 있을 때 React가 경고하는 이유이며, 이 문제를 해결하려면 해당 로직을 useEffect로 이동시키거나 클라이언트 렌더링이 완료될 때까지 컴포넌트 노출을 지연하도록 해야한다.

@@ -354,3 +354,28 @@ useRef는 current 프로퍼티에 mutable한 값을 담을 수 있는 "box"와 �
 {current: ...} 객체를 직접 생성하는 것과 useRef를 사용하여 객체를 생성하는 것의 유일한 차이는 useRef는 모든 렌더링에서 동일한 ref 객체를 제공한다는 것이다.
 
 useRef는 콘텐츠가 변경되어도 사용자에게 알려주지 않는다. 즉, current 프로퍼티를 변경해도 리렌더를 일으키지 않는다는 의미이다.
+
+### useImperativeHandle
+
+```jsx
+useImperativeHandle(ref, createHandle, [deps])
+```
+
+useImperativeHandle hook은 ref 사용 시 부모 컴포넌트에 노출된 인스턴스 값을 변경할 때 사용한다. forwardRef와 함께 사용한다.
+
+```jsx
+const FancyInput = (props, ref) => {
+  const inputRef = useRef();
+  
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputRef.current.focus();
+    }
+  }));
+  
+  return <input ref={inputRef} />;
+}
+FancyInput = forwardRef(FancyInput);
+```
+
+\<FancyInput ref={inputRef} /> 컴포넌트를 렌더링한 부모 컴포넌트는 Input.current.focus()를 호출할 수 있다.

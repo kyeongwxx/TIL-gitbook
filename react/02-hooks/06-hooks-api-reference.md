@@ -322,3 +322,35 @@ create 함수와 dependency를 전달하면 useMemo는 dependency가 변경되�
 useMemo로 전달된 함수는 렌더링 중에 실행된다. 따라서 side effects는 useEffect에서 하는 일이지 useMemo에서 하는 일이 아니다.
 
 dependency 배열이 없는 경우엔 매 렌더링 때마다 새 값을 계산하게 된다.
+
+### useRef
+
+```jsx
+const refContainer = useRef(initialValue);
+```
+
+useRef hook은 current 프로퍼티가 전달된 인수 initialValue로 초기화된 mutable한 객체를 반환한다. 반환된 객체는 컴포넌트의 전 생애주기 간 유지된다.
+
+```jsx
+const TextInputWithFocusButton = () => {
+  const inputElement = useRef(null);
+  
+  const onClickBtn = () => {
+    // 'current'는 마운트된 inputElement를 가리킨다.
+    inputElement.current.focus();
+  };
+  
+  return (
+    <>
+      <input ref={inputElement} type="text" />
+      <button onClick={onClickBtn}>Focus the input!!</button>
+    </>
+  );
+}
+```
+
+useRef는 current 프로퍼티에 mutable한 값을 담을 수 있는 "box"와 같다.
+
+{current: ...} 객체를 직접 생성하는 것과 useRef를 사용하여 객체를 생성하는 것의 유일한 차이는 useRef는 모든 렌더링에서 동일한 ref 객체를 제공한다는 것이다.
+
+useRef는 콘텐츠가 변경되어도 사용자에게 알려주지 않는다. 즉, current 프로퍼티를 변경해도 리렌더를 일으키지 않는다는 의미이다.

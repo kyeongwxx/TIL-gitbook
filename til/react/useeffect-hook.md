@@ -1,5 +1,10 @@
 # useEffect hook의 첫 렌더링 시 함수 실행을 막는 방법
 
+## TL;DR
+
+* useRef hook으로 선언한 변수의 current 속성은 값이 변해도 리렌더링을 일으키지 않는다.
+* 이를 활용한 custom hook으로 useEffect hook 내부 함수의 첫 실행을 막을 수 있다.
+
 dependency에 넣어준 state의 값이 변함에 따라 내부의 함수를 실행시키는 useEffect hook을 사용하고 싶었지만, 첫 렌더링 시에 일어나는 함수의 실행은 막고 싶었다.
 
 이유는 레이아웃 단에서 실행되는 useEffect의 내부 함수와 특정 페이지에서 실행되는 useEffect의 내부 함수가 정확히 같은 동작을 하는 함수인데, 이 특정 페이지로 이동할 경우 같은 두 함수가 모두 실행되어 발생하는 문제가 있었기 때문이다.

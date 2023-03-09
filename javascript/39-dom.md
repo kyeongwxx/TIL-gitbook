@@ -2032,6 +2032,6 @@ getComputedStyle 메서드의 두 번째 인수(pseudo)로 :after, :before와 �
 
 > Reference
 >
-> 자바스크립트 DEEP DIVE
+> 모던 자바스크립트 DEEP DIVE
 >
 > **2023.03.09**

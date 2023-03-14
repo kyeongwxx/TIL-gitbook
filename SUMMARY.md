@@ -66,3 +66,6 @@
     * [04-Rules of Hooks](react/02-hooks/04-rules-of-hooks.md)
     * [05-Building Your Own Hooks](react/02-hooks/05-building-your-own-hooks.md)
     * [06-Hooks API Reference](react/02-hooks/06-hooks-api-reference.md)
+  * [03-Tutorial](react/03-tutorial/README.md)
+    * [01-Inspecting the starter code](react/03-tutorial/01-inspecting-the-starter-code.md)
+    * [02-Building the board](react/03-tutorial/02-building-the-board.md)

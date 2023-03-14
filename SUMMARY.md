@@ -70,3 +70,4 @@
     * [01-Inspecting the starter code](react/03-tutorial/01-inspecting-the-starter-code.md)
     * [02-Building the board](react/03-tutorial/02-building-the-board.md)
     * [03-Passing data through props](react/03-tutorial/03-passing-data-through-props.md)
+    * [04-Making an interactive component](react/03-tutorial/04-making-an-interactive-component.md)

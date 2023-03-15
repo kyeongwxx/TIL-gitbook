@@ -71,3 +71,4 @@
     * [02-Building the board](react/03-tutorial/02-building-the-board.md)
     * [03-Passing data through props](react/03-tutorial/03-passing-data-through-props.md)
     * [04-Making an interactive component](react/03-tutorial/04-making-an-interactive-component.md)
+    * [05-Lifting state up](react/03-tutorial/05-lifting-state-up.md)

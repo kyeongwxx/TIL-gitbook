@@ -160,3 +160,65 @@ handleClick(0) 호출은 Board 컴포넌트 렌더링의 일부이다. 왜냐하
 
 이때 handleClick(0)은 Board 컴포넌트 렌더링의 일부이므로 무한 루프를 일으킨다.
 
+왜 이 문제가 더 일찍 발생하지 않았을까?
+
+onSquareClick={handleClick}을 전달할 땐 handleClick 함수를 prop으로 전달했다. 이때 함수 호출을 의도한 것은 아닌데 지금은 (0) 때문에 해당 함수를 즉시 호출하고 있다.
+
+이 문제를 해결하려면 다음과 같이 화살표 함수를 이용할 수 있다.
+
+```jsx
+export default function Board() {
+  // ...
+  return (
+    <>
+      <div className="board-row">
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+        // ...
+  );
+}
+```
+
+화살표 문법은 함수를 정의하는 더 짧은 방법이다. 사각형을 클릭하면 화살표 뒤의 코드가 실행되어 handleClick(0)을 호출한다.
+
+이제 다른 8개의 사각형을 수정해보자. handleClick의 각 호출에 대한 인수가 사각형의 올바른 인덱스에 해당하는 확인하자.
+
+```jsx
+export default function Board() {
+  // ...
+  return (
+    <>
+      <div className="board-row">
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
+        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
+        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
+        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
+        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+      </div>
+    </>
+  );
+};
+```
+
+이제 보드의 사각형을 클릭하여 X를 추가할 수 있다. 이번에는 모든 state 관리가 Board 컴포넌트에 의해 처리된다.
+
+state 처리를 Board 컴포넌트에서 진행하므로, 부모 컴포넌트는 자식 컴포넌트에 props를 전달하여 올바르게 화면에 나타날 수 있도록한다. Sqaure 컴포넌트를 클릭하면 이제 Board 컴포넌트에 state를 업데이트하도록 요청한다. Board 컴포넌트의 state가 변경되면 Board 컴포넌트와 모든 하위 컴포넌트가 모두 자동으로 리렌더링된다. Board 컴포넌트의 모든 squares state를 유지하면 나중에 승자를 결정할 수 있다.
+
+사용자가 보드의 왼쪽 상단 사각형을 클릭하여 X를 추가하면 어떤 일이 발생하는지 요약해보자.
+
+1. Square 컴포넌트의 \<button> 요소에서 onClick prop으로 받은 함수가 실행된다. Square 컴포넌트는 Board 컴포넌트로부터 onSquareClick prop으로 해당 함수를 받았다. Board 컴포넌트는 JSX에서 직접 해당 함수를 정의했으며 인수 0으로 handleClick을 호출한다.
+2. handleClick은 인수를 사용하여 squares 배열의 첫 번째 요소를 null에서 X로 업데이트한다.
+3. Board 컴포넌트의 squares state가 업데이트 되었으므로 Board 컴포넌트와 모든 자식 컴포넌트가 리렌더링된다.
+
+결과로 사용자는 왼쪽 상단 사각형이 비어 있는 상태에서 클릭한 후 X 표시로 변경된 것을 볼 수 있다.
+
+> Reference\
+> [https://beta.reactjs.org/](https://beta.reactjs.org/)\
+> **2023.03.15**

@@ -10,7 +10,7 @@ export default function Square() {
 }
 ```
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (5).png" alt=""><figcaption></figcaption></figure>
 
 위와 같은 오류가 발생할텐데, 리액트 컴포넌트는 두 개의 버튼과 같이 여러 개의 인접한 JSX 요소가 아닌 단일 JSX를 return 해야 한다.
 
@@ -67,7 +67,7 @@ export default function Square() {
 
 이렇게 하면 tic-tac-toe 보드를 볼 수 있다.
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 다음으로 Square 컴포넌트는 더 이상 정사각형이 아니니, 컴포넌트 이름을 Board로 수정하자.
 

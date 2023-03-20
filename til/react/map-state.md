@@ -44,7 +44,7 @@ export default function App() {
 
 하지만 일어나는 일은? 어떤 버튼을 누르든 모든 모달이 다 열림.
 
-<figure><img src="../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (9) (2).png" alt=""><figcaption></figcaption></figure>
 
 컴포넌트를 분리하지 않고 작업을 하게 되면 마주하게 될 상황이다. 가령 List 페이지에서 카드 형식의 게시물을 뿌려줄 때 찜하기를 누르면 모든 게시물의 찜하기가 눌린다거나, 게시물 상단에 툴팁을 여는 버튼을 달아줄 때 버튼 클릭 시 모든 게시물의 툴팁이 열린다거나..
 

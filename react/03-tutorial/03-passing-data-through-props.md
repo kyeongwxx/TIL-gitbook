@@ -45,7 +45,7 @@ div처럼 일반적인 HTML 요소와는 다르게 컴포넌트인 Board와 Squa
 
 확인해보면?
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 이 전에 가지고 있던 번호가 매겨진 사각형이 사라지고, 각 사각형에는 1만 표시되었다. 이 문제를 해결하려면 props를 사용하여 각 사각형이 가져야 하는 값을 상위 컴포넌트(Board)에서 하위 컴포넌트(Square)로 전달해야한다.
 

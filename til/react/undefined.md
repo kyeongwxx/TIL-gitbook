@@ -48,7 +48,7 @@ export const invoiceExcelDownloadApi = async(invoiceNo) => {
 
 ```jsx
      // ...
-     const data = response. data;
+     const data = response.data;
      const fileName = `Invoice_${invoiceNo}.xlsx`;
      const workbook = XLSX.read(data, { type: 'array' });
      const fileContent = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });

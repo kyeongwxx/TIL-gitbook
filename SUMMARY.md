@@ -74,3 +74,6 @@
     * [03-Passing data through props](react/03-tutorial/03-passing-data-through-props.md)
     * [04-Making an interactive component](react/03-tutorial/04-making-an-interactive-component.md)
     * [05-Lifting state up](react/03-tutorial/05-lifting-state-up.md)
+  * [04-Learn React](react/04-learn-react/README.md)
+    * [04-Escape Hatches](react/04-learn-react/04-escape-hatches/README.md)
+      * [08-Reusing Logic with Custom Hooks](react/04-learn-react/04-escape-hatches/08-reusing-logic-with-custom-hooks.md)

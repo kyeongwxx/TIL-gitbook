@@ -633,3 +633,5 @@ function ShippingForm({ country }) {
 ```
 
 custom Hook을 사용하면 데이터 흐름이 명시적으로 된다. url을 입력하고, data를 가져온다. custom Hook 내부에 Effect를 숨김으로써 컴포넌트에서 작업하는 사람이 불필요한 dependency를 추가하지 못하도록 방지할 수도 있다.
+
+### Custom Hooks help you migrate to better patterns

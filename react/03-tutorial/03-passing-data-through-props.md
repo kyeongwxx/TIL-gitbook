@@ -69,7 +69,7 @@ function Square({ value }) {
 
 확인해보면?
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (2).png" alt=""><figcaption></figcaption></figure>
 
 렌더링하려고 한 건 "value"라는 단어가 아니라 value 변수이다. JSX에서 자바스크립트로 탈출하려면 중괄호가 필요하다.
 

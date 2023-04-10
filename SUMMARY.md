@@ -48,6 +48,7 @@
   * [38-브라우저의 렌더링 과정](javascript/38.md)
   * [39-DOM](javascript/39-dom.md)
   * [40-이벤트](javascript/40.md)
+  * [41-타이머](javascript/41.md)
 * [😄 REACT](react/README.md)
   * [01-Main Concepts](react/01-main-concepts/README.md)
     * [01-JSX](react/01-jsx.md)

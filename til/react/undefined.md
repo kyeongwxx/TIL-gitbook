@@ -5,9 +5,9 @@
 * api 호출 시 **responseType: 'arraybuffer'** 옵션을 명시하여 받을 response의 형식을 지정해주어야 한다.
 * 이렇게 받은 데이터를 다운로드하기 위해선 추가적인 데이터 가공 과정이 필요하다.
 
-정산 관련 페이지를 구현하는 중에 엑셀 다운로드 기능이 필요했다. xlsx 파일을 직접 return하는 api를 용했는데, 이 부분이 s3 링크를 return하는 기존 엑셀 다운로드 api와 다른 점이었다.
+정산 관련 페이지를 구현하는 중에 엑셀 다운로드 기능이 필요했다. xlsx 파일을 직접 return 하는 api를 이용하게 되었는데, 이 부분이 s3 링크를 return 하는 기존 엑셀 다운로드 api와 다른 점이었다.
 
-이렇게 기존과 다르게 진행하는 이유는 다운로드받을 파일이 임시 성격이 강해 굳이 s3를 거칠 필요가 없는 데이터이기 때문!
+이렇게 기존과 다르게 진행하는 이유는 다운로드받을 파일이 임시적인 성격이 강해 굳이 s3를 거칠 필요가 없는 데이터이기 때문!
 
 그냥 하면 되겠지 했는데 의외로 시간 엄청 잡아 먹어서 다시 공부할 겸 정리해 보고자 한다.
 
@@ -22,7 +22,7 @@ import XLSX from 'xlsx';
 우선 http 요청을 만들기 위한 **axios**, 다운로드한 파일을 저장하기 위한 **file-saver**, 엑셀 파일을 읽거나 만들기 위한 **XLSX**와 같은 필수 모듈을 import한다.
 
 ```jsx
-export const invoiceExcelDownloadApi = async(invoiceNo) => {
+export const invoiceExcelDownloadApi = async (invoiceNo) => {
    try {
      const response = await axios({
        method: 'get',

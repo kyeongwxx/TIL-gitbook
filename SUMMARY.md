@@ -2,6 +2,8 @@
 
 * [🌕 Intro](README.md)
 * [🔥 TIL](til/README.md)
+  * [Javascript](til/javascript/README.md)
+    * [find() 메서드의 적절한 사용법](til/javascript/find.md)
   * [React](til/react/README.md)
     * [input 요소에서 엔터키를 사용하여 onClick 효과를 만드는 방법(feat. 검색창)](til/react/input-onclick-feat..md)
     * [useEffect hook의 첫 렌더링 시 함수 실행을 막는 방법](til/react/useeffect-hook.md)

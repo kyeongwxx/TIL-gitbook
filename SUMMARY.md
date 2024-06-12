@@ -1,6 +1,9 @@
 # Table of contents
 
 * [🌕 Intro](README.md)
+* [🌱 COMPUTER SCIENCE](computer-science/README.md)
+  * [data structure & algorithm](computer-science/data-structure-and-algorithm/README.md)
+    * [01-개요](computer-science/data-structure-and-algorithm/01.md)
 * [🔥 TIL](til/README.md)
   * [Javascript](til/javascript/README.md)
     * [find() 메서드의 적절한 사용법](til/javascript/find.md)
@@ -80,6 +83,3 @@
   * [04-Learn React](react/04-learn-react/README.md)
     * [04-Escape Hatches](react/04-learn-react/04-escape-hatches/README.md)
       * [08-Reusing Logic with Custom Hooks](react/04-learn-react/04-escape-hatches/08-reusing-logic-with-custom-hooks.md)
-* [🌱 COMPUTER SCIENCE](computer-science/README.md)
-  * [data structure & algorithm](computer-science/data-structure-and-algorithm/README.md)
-    * [01-개요](computer-science/data-structure-and-algorithm/01.md)
